@@ -5,13 +5,22 @@ tooltipElements.forEach((element) => {
     e.preventDefault();
 
     const existingTooltip = document.querySelector(".tooltip_active");
+    const tooltipText = element.getAttribute("title");
+
     if (existingTooltip) {
-      existingTooltip.remove();
+      const existingTooltipText = existingTooltip.textContent;
+
+      if (existingTooltipText === tooltipText) {
+        existingTooltip.classList.toggle("tooltip_active");
+        return;
+      } else {
+        existingTooltip.remove();
+      }
     }
 
     const tooltip = document.createElement("div");
     tooltip.className = "tooltip";
-    tooltip.textContent = element.getAttribute("title");
+    tooltip.textContent = tooltipText;
 
     const rect = element.getBoundingClientRect();
     tooltip.style.left = `${rect.left + window.scrollX}px`;
